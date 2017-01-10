@@ -1,0 +1,12 @@
+<!DOCTYPE hibernate-mapping PUBLIC  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+<class name = "com.model.User" table = "Users">
+<id name = "userName" type="java.lang.String" column ="USER_NAME"/>
+<property name="firstName" type ="java.lang.String" column ="FIRST_NAME"/>
+<property name="lastName" type="java.lang.String" column ="LAST_NAME"/>
+<property name="email" type="java.lang.String" column ="EMAIL"/>
+<property name="password" type="java.lang.String" column ="PASSWORD"/>
+<property name="deleteSW" type="char" column ="DELETE_SW"/>
+</class>
+</hibernate-mapping>
