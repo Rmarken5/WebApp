@@ -3,6 +3,7 @@ package com.dao;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.net.Socket;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,8 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.misc.QueryStrings;
 import com.model.GalleryImage;
-
-import oracle.sql.BLOB;
 
 public class GalleryImageDAOImpl implements GalleryImageDAO{
 	Configuration cg = new Configuration().configure();
@@ -113,4 +112,13 @@ public class GalleryImageDAOImpl implements GalleryImageDAO{
 		}
 		return false;
 	}
+	/*public boolean testConnectionForLinux() throws Exception{
+		boolean isSuccess = false;
+		String host = "pegasus@10.0.0.44";
+		JSch jsch = new JSch();
+		try{
+			
+		}
+		
+	}*/
 }
