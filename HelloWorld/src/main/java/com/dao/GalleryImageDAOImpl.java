@@ -1,16 +1,21 @@
 package com.dao;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.Socket;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -20,8 +25,10 @@ import org.hibernate.service.ServiceRegistry;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.ChannelSftp;
+import com.jcraft.jsch.ChannelSftp.LsEntry;
 import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.SftpATTRS;
 import com.jcraft.jsch.UserInfo;
 import com.misc.QueryStrings;
 import com.model.GalleryImage;
@@ -120,53 +127,54 @@ public class GalleryImageDAOImpl implements GalleryImageDAO {
 		return false;
 	}
 
-	public void testConnectionForLinux() throws Exception {
-		String host = "ryan@10.0.0.44";
+	public InputStream getImageByName() throws Exception {
+		String host = "pegasus@127.0.0.1";
 		String user = null;
 		JSch jsch = new JSch();
 		UserInfo userInfo = null;
-		String command = null;
+		String dir = "/home/pegasus/Documents/ValleyJam";
+		ChannelSftp channelSftp = null;
+		InputStream inst = null;;
+		Channel channel = null;
+		com.jcraft.jsch.Session session = null;
 		try {
-			user = host.substring(0, host.indexOf('@') + 1);
+			user = host.substring(0, host.indexOf('@'));
 			host = host.substring(host.indexOf('@') + 1);
-			com.jcraft.jsch.Session session = jsch.getSession(user, host, 22);
+			session = jsch.getSession(user, host, 22);
 			userInfo = new MyUserInfo();
 			session.setUserInfo(userInfo);
+			session.setConfig("StrictHostKeyChecking", "no");
 			session.connect();
 
-			command = "grep 'INFO' filepath";
-			Channel channel = session.openChannel("exec");
-			((ChannelExec) channel).setCommand(command);
-
-			channel.setInputStream(null);
-
-			((ChannelExec) channel).setErrStream(System.err);
-
-			InputStream in = channel.getInputStream();
-
+			channel = session.openChannel("sftp");
 			channel.connect();
-
-			byte[] tmp = new byte[1024];
-			while (true) {
-				while (in.available() > 0) {
-					int i = in.read(tmp, 0, 1024);
-					if (i < 0)
-						break;
-					System.out.print(new String(tmp, 0, i));
-				}
-				if (channel.isClosed()) {
-					System.out.println("exit-status: " + channel.getExitStatus());
+			channelSftp = (ChannelSftp) channel;
+			channelSftp.cd(dir);
+			System.out.println(channelSftp.pwd());
+			System.out.println(channelSftp.ls(dir + "/" + "2.jpg"));
+			System.out.println(channelSftp.ls(channelSftp.pwd()));
+			Vector<LsEntry> files = channelSftp.ls("*.jpg");
+			System.out.println(String.format("Found %d files in %s Path", files.size(),dir));
+			for(ChannelSftp.LsEntry file : files){
+				if(file.getAttrs().isDir()){
+					continue;
+				}else{
+					System.out.printf("Reading File %s", file.getFilename());
+					inst = channelSftp.get(file.getFilename());
 					break;
 				}
-				try {
-					Thread.sleep(1000);
-				} catch (Exception ee) {
-				}
 			}
-			channel.disconnect();
-			session.disconnect();
+			return inst;
+			
 		} catch (Exception e) {
 			throw e;
+		} finally {
+			if (null != channel) {
+				channel.disconnect();
+			}
+			if (null != session) {
+				session.disconnect();
+			}
 		}
 
 	}
