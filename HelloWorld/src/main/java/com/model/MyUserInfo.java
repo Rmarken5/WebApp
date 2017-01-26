@@ -32,5 +32,8 @@ public class MyUserInfo implements UserInfo {
 	public void showMessage(String message) {
 
 	}
+	public void setPassword(String passwd){
+		this.passwd = passwd;
+	}
 
 }

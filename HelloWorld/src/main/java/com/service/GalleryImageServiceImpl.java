@@ -1,6 +1,7 @@
 package com.service;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -24,5 +25,8 @@ public class GalleryImageServiceImpl implements GalleryImageService {
 	public List<File> getAllPictureDirectories() throws Exception {
 		
 		return galleryDao.getAllPictureDirectories();
+	}
+	public byte[] getImageByName(GalleryImage image) throws Exception {
+		return galleryDao.getImageByName(image);
 	}
 }

@@ -78,6 +78,20 @@ public class FileUploadBO {
 			throw e;
 		}
 	}
+	public byte[] getFileContentsByName(String imageName)throws Exception{
+		GalleryImageService service = null;
+		GalleryImage image = null;
+		try{
+			if(null != imageName){
+				service = new GalleryImageServiceImpl();
+				image = service.getPictureByName(imageName);
+				 return service.getImageByName(image);
+			}
+			return null;
+		}catch(Exception e){
+			throw e;
+		}
+	}
 	public byte[] getBytesFromFile(File inputFile) throws Exception{
 		
 		try{

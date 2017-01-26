@@ -62,10 +62,12 @@ public class MainController {
 		System.out.println(imageName);
 		OutputStream os = null;
 		InputStream in = null;
+		byte[] imageContents = null;
+		GalleryImageService service = new GalleryImageServiceImpl();
 		try{
-
-			image = fileBO.getFile(imageName);
-			if(null != image){
+			imageContents = fileBO.getFileContentsByName(imageName);
+			//image = fileBO.getFile(imageName);
+			if(null != imageContents && imageContents.length > 0){
 				/*bytesFromFile = fileBO.getBytesFromFile(image);
 				if(null != bytesFromFile && bytesFromFile.length > 0){*/
 				if(null != response){
@@ -73,12 +75,13 @@ public class MainController {
 					response.setHeader("Content-Length", String.valueOf(image.length()));
 					response.setHeader("Content-Disposition", "inline; filename=\"" + image.getName() + "\"");
 
-					in = new BufferedInputStream(new FileInputStream(image));
+					//in = new BufferedInputStream(new FileInputStream(image));
 					os = new BufferedOutputStream(response.getOutputStream());
-					byte[] buffer = new byte[8192];
+					/*byte[] buffer = new byte[8192];
 					for (int length = 0; (length = in.read(buffer)) > 0;) {
 						os.write(buffer, 0, length);
-					}
+					}*/
+					os.write(imageContents);
 				}
 				//}
 			}
