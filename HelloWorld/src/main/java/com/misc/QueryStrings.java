@@ -8,4 +8,7 @@ public class QueryStrings {
 	public final static String GET_IMAGES_BY_NAME = "SELECT GI FROM " + com.model.GalleryImage.class.getName()+  " GI WHERE NAME = :name";
 	public final static String GET_ALL_GALLERY_IMAGE_DIRECTORY = "SELECT GI.directory as directory FROM " + com.model.GalleryImage.class.getName()+ " GI";
 	public final static String STORAGE_DIRECTORY = "C:/Users/Ryan/OneDrive/Valley Jam/pics/";
+	public final static String GET_ALL_IMAGE_NAMES = "SELECT GI.name FROM "+ com.model.GalleryImage.class.getName() +" GI";
+	public final static String GET_ALL_GALLERY_IMAGE_COUNT = "SELECT COUNT(*) FROM " + com.model.GalleryImage.class.getName()+ " GI";
+
 }

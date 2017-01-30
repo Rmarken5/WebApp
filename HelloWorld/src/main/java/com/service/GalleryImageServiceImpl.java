@@ -29,4 +29,13 @@ public class GalleryImageServiceImpl implements GalleryImageService {
 	public byte[] getImageByName(GalleryImage image) throws Exception {
 		return galleryDao.getImageByName(image);
 	}
+	public List<String> getAllImageNames() throws Exception {
+		return galleryDao.getAllImageNames();
+	}
+	public List<String> getAllImageNamesByPagination(int numOfRows, int startingRow) throws Exception{
+		return galleryDao.getAllImageNamesByPagination(numOfRows, startingRow);
+	}
+	public Long getCountOfAllPictures() throws Exception{
+		return galleryDao.getCountOfAllPictures();
+	}
 }

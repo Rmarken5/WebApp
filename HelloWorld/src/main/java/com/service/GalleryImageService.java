@@ -14,4 +14,7 @@ public interface GalleryImageService {
 	public boolean uploadImage(MultipartFile picutre) throws Exception;
 	public List<File> getAllPictureDirectories() throws Exception;
 	public byte[] getImageByName(GalleryImage image) throws Exception;
+	public List<String> getAllImageNames() throws Exception;
+	public List<String> getAllImageNamesByPagination(int numOfRows, int startingRow) throws Exception;
+	public Long getCountOfAllPictures() throws Exception;
 }

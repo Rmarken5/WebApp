@@ -8,42 +8,78 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@include file="banner.jsp"%>
-<%int i = 1; %>
+<%
+	int i = 1;
+%>
+<style type="text/css">
+div.img {
+	border: 1px solid #ccc;
+}
 
-<script  type="text/javascript" >
-	$(document).ready(function(){
+div.img:hover {
+	border: 1px solid #777;
+}
 
-   $("td").addClass("images");
-   $("img").addClass("image");
-  // $(document).css('background-image', 'url( /HelloWorld/src/main/webapp/WEB-INF/resources/images/i89.jpg)');
+div.img img {
+	width: 100%;
+	height: auto;
+}
 
-});
+div.desc {
+	padding: 15px;
+	text-align: center;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.responsive {
+	padding: 0 6px;
+	float: left;
+	/*width: 24.99999%;*/
+}
+</style>
+<script type="text/javascript">
+	$(document).ready(function() {
+ 		$("#mainTable").addClass("galleryImageTable");
+		//$("#mainTable tr").addClass("galleryImageRow");
+		$("#mainTable td").addClass("galleryImageCell"); 
+		// $(document).css('background-image', 'url( /HelloWorld/src/main/webapp/WEB-INF/resources/images/i89.jpg)');
+
+	});
 </script>
 <title>Valley Jam - Gallery Page</title>
-
-<style type="text/css">
-body {
-	background-image: url("../resources/images/i89.jpg");
-} 
-</style>
 </head>
 <body>
 	<form:form id="mainForm">
-		<table id = "mainTable" style = "table-layout:auto;">
-		<tr>
-		<c:forEach items="${galleryImages}" var="image">
-		 
-		<% if(i % 5 == 0){%>
-		</tr>
-		 <tr>
-		 <% } %>
-			<td><img src="img/${image.getName()}"  alt="image"/> </td>
-		<% if(i % 5 == 0){ %>
-		 </tr>
-		 <% } %>
-		 <%i++; %>
+		<table id="mainTable">
+			<tr>
+				<c:forEach items="${galleryImages}" var="image">
+
+					<%
+						if (i % 5 == 0) {
+					%>
+				
+			</tr>
+			<tr>
+				<%
+					}
+				%>
+				<td>
+					<div class="responsive">
+						<div class="img">
+							<img src="img/${image}" alt="image" />${image}
+						</div>
+					</div>
+				</td>
+			
+			<%
+				i++;
+			%>
 			</c:forEach>
 		</table>
 	</form:form>
+	<%@include file="pagination.jsp"%>
 </body>
 </html>

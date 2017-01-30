@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -23,6 +24,8 @@ import com.model.GalleryImage;
 import com.service.GalleryImageService;
 import com.service.GalleryImageServiceImpl;
 
+import antlr.StringUtils;
+
 
 
 @Controller
@@ -30,21 +33,29 @@ public class MainController {
 
 	@Autowired 
 	private ServletContext servletContext;
+	private final int maxNumOfImages = 20;
 
-
-	@RequestMapping(value="gallery", method = RequestMethod.GET)
-	public ModelAndView showMainPage(){
+	@RequestMapping(value="gallery/{pageNum}", method = RequestMethod.GET)
+	public ModelAndView showMainPage(@PathVariable("pageNum") String pageNum){
 		GalleryImageService imageSrvc = new GalleryImageServiceImpl();
+		FileUploadBO fileBO = new FileUploadBO();
 		ModelAndView mv = new ModelAndView();
-		GalleryImage[] galleryImageArray = null;
-		List<File> directories =null;
+		List<String> imageNames =null;
+		int startingImage = 0;
+		long maxPages = 0;
 		try{
-			directories = imageSrvc.getAllPictureDirectories();
-			if(directories != null && directories.size( ) > 0){
-				mv.addObject("galleryImages",directories);
-
-				System.out.println(directories.get(0).getAbsolutePath());
-				directories.get(0).getName();
+			if(null != pageNum && org.apache.commons.lang3.StringUtils.isNumeric(pageNum)){
+				startingImage = maxNumOfImages * Integer.parseInt(pageNum);
+			}else{
+				startingImage = 0;
+			}
+			imageNames = imageSrvc.getAllImageNamesByPagination(maxNumOfImages, startingImage);
+			maxPages = fileBO.getNumOfPages(maxNumOfImages);
+			if(imageNames != null && imageNames.size( ) > 0){
+				mv.addObject("galleryImages",imageNames);
+				mv.addObject("pageNum", Integer.parseInt(pageNum));
+				mv.addObject("maxPages", maxPages);
+				System.out.println(imageNames.get(0));
 			}
 
 			mv.setViewName("main");
@@ -54,16 +65,13 @@ public class MainController {
 		}
 		return mv;
 	}
-	@RequestMapping(value = "img/{imageName}",method = RequestMethod.GET)
+	@RequestMapping(value = "gallery/img/{imageName}",method = RequestMethod.GET)
 	public void retrieveImage(@PathVariable("imageName") String imageName, HttpServletResponse response ) throws Exception{
-		File image = null;
-		byte[] bytesFromFile = null;
 		FileUploadBO fileBO = new FileUploadBO();
 		System.out.println(imageName);
 		OutputStream os = null;
 		InputStream in = null;
 		byte[] imageContents = null;
-		GalleryImageService service = new GalleryImageServiceImpl();
 		try{
 			imageContents = fileBO.getFileContentsByName(imageName);
 			//image = fileBO.getFile(imageName);
@@ -71,9 +79,9 @@ public class MainController {
 				/*bytesFromFile = fileBO.getBytesFromFile(image);
 				if(null != bytesFromFile && bytesFromFile.length > 0){*/
 				if(null != response){
-					response.setHeader("Content-Type", servletContext.getMimeType(image.getName()));
-					response.setHeader("Content-Length", String.valueOf(image.length()));
-					response.setHeader("Content-Disposition", "inline; filename=\"" + image.getName() + "\"");
+					response.setHeader("Content-Type", "image/jpeg");
+					response.setHeader("Content-Length", String.valueOf(imageContents.length));
+					response.setHeader("Content-Disposition", "inline; filename=\"" + imageName + "\"");
 
 					//in = new BufferedInputStream(new FileInputStream(image));
 					os = new BufferedOutputStream(response.getOutputStream());

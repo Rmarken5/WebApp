@@ -25,16 +25,23 @@ function changeBackground(element){
 </script>
 
 <style>
-.images{
+.galleryImageTable{
+width: 100%;	
+table-layout: fixed;
+}
+/* .galleryImageRow{
 height:150px;
-width:20%;
-border-sytle: onset black 5px;
-}
-.image{
-height:100%;
 width:100%;
-vertical-align: middle;
+padding: 15px;
+} */
+.galleryImageCell{
+/* height:25%; */
+width:25%;
+/*  padding: 15px;
+border-sytle: onset black 5px; */
+
 }
+
 #banner li a {
         text-shadow: 0 2px 1px rgba(0,0,0,0.5);
         display: block;
@@ -101,7 +108,7 @@ vertical-align: middle;
 					
 						<li onmouseover="changeBackground(this)" id ="main"><a href = "main">Main</a></li>
 						<li><a href = "acts">Acts</a></li>
-						<li><a href = "gallery">Gallery</a></li>
+						<li><a href = "gallery/1">Gallery</a></li>
 						<li><a href = "contact">Contact</a></li>
 					
 					<%

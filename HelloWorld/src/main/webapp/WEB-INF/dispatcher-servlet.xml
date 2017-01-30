@@ -18,6 +18,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		</property>
 		
 	</bean>
+	<context:property-placeholder  location="classpath:application.properties"/>
 
 
 </beans>
