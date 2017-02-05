@@ -42,9 +42,10 @@ div.desc {
 </style>
 <script type="text/javascript">
 	$(document).ready(function() {
- 		$("#mainTable").addClass("galleryImageTable");
+		$("#mainTable").addClass("galleryImageTable");
 		//$("#mainTable tr").addClass("galleryImageRow");
-		$("#mainTable td").addClass("galleryImageCell"); 
+		$("#mainTable td").addClass("galleryImageCell");
+		$('body').css('background','#0642a3');
 		// $(document).css('background-image', 'url( /HelloWorld/src/main/webapp/WEB-INF/resources/images/i89.jpg)');
 
 	});
@@ -58,10 +59,16 @@ div.desc {
 				<c:forEach items="${galleryImages}" var="image">
 
 					<%
-						if (i % 5 == 0) {
+						if (i % 5 == 0 && i != 0) {
 					%>
 				
 			</tr>
+			<%
+				}
+			%>
+			<%
+				if (i % 5 == 0) {
+			%>
 			<tr>
 				<%
 					}
@@ -73,11 +80,12 @@ div.desc {
 						</div>
 					</div>
 				</td>
-			
-			<%
-				i++;
-			%>
-			</c:forEach>
+
+
+				<%
+					i++;
+				%>
+				</c:forEach>
 		</table>
 	</form:form>
 	<%@include file="pagination.jsp"%>

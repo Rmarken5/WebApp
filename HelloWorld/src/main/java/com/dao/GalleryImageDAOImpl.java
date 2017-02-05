@@ -217,8 +217,9 @@ public class GalleryImageDAOImpl implements GalleryImageDAO {
 	public List<String> getAllImageNamesByPagination(int numOfRows, int startingRow) throws Exception {
 		try {
 			Query query = ssn.createQuery(QueryStrings.GET_ALL_IMAGE_NAMES);
-			/*query.setFirstResult(startingRow);
-			query.setMaxResults(numOfRows);*/
+			query.setFirstResult(startingRow);
+			query.setFetchSize(numOfRows);
+			query.setMaxResults(numOfRows);
 			
 			List<String> images = (List<String>)query.list();
 					

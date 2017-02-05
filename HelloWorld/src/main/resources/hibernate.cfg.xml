@@ -9,7 +9,7 @@
 	<session-factory>
 		<property name="connection.username">scott</property>
 		<property name="connection.url">
-			jdbc:oracle:thin:@localhost:1521:RYAN
+			jdbc:oracle:thin:@10.0.0.114:1521:RYAN
 	</property>
 		<property name="dialect">
 			org.hibernate.dialect.Oracle9Dialect

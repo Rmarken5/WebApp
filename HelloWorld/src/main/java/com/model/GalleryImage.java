@@ -1,10 +1,15 @@
 package com.model;
 
-import java.sql.Blob;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class GalleryImage {
-
+public class GalleryImage implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3117648039575102338L;
+	
+	private long id;
 	private String name;
 	private String directory;
 	private Timestamp dateTaken;
@@ -26,6 +31,12 @@ public class GalleryImage {
 	}
 	public void setDirectory(String directory) {
 		this.directory = directory;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	
