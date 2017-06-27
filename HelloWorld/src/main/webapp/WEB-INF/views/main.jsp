@@ -39,15 +39,40 @@ div.desc {
 	float: left;
 	/*width: 24.99999%;*/
 }
+
 </style>
 <script type="text/javascript">
+
 	$(document).ready(function() {
 		$("#mainTable").addClass("galleryImageTable");
 		//$("#mainTable tr").addClass("galleryImageRow");
 		$("#mainTable td").addClass("galleryImageCell");
-		$('body').css('background','#0642a3');
+		$('body').css('background', '#0642a3');
 		// $(document).css('background-image', 'url( /HelloWorld/src/main/webapp/WEB-INF/resources/images/i89.jpg)');
 
+		var classname = document.getElementsByClassName("img");
+		
+		
+		function opendialog() {
+			  var $dialog = $('#dialog1')
+			  .html('<iframe style=" border-style: solid;border-color: #000000" src="' + this.children[0].src + '" width="100%" height="100%"></iframe>')
+			  .dialog({
+			    title: "Page",
+			    autoOpen: false,
+			    //dialogClass: 'dialog_fixed,ui-widget-header',
+			    modal: true,
+			    height: this.children[0].naturalHeight,
+			    width: this.children[0].naturalWidth,
+			    draggable:true,
+			    /*close: function () { $(this).remove(); },*/
+			    buttons: { "Ok": function () {         $(this).dialog("close"); } }
+			  });
+			  $dialog.dialog('open');
+			} 
+
+		Array.from(classname).forEach(function(element) {
+			element.addEventListener('click', opendialog);
+		});
 	});
 </script>
 <title>Valley Jam - Gallery Page</title>
@@ -87,6 +112,7 @@ div.desc {
 				%>
 				</c:forEach>
 		</table>
+		<div id="dialog1" title="Dialog Title" hidden="hidden">I'm a dialog</div>
 	</form:form>
 	<%@include file="pagination.jsp"%>
 </body>
