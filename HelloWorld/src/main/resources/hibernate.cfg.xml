@@ -9,24 +9,25 @@
 	<session-factory>
 		<property name="connection.username">scott</property>
 		<property name="connection.url">
-			jdbc:oracle:thin:@10.0.0.114:1521:RYAN
-	</property>
+			jdbc:oracle:thin:@10.0.0.242:1521:RYAN
+		</property>
 		<property name="dialect">
 			org.hibernate.dialect.Oracle9Dialect
-	</property>
+		</property>
 
 		<property name="connection.password">tiger2</property>
 		<property name="connection.driver_class">
 			oracle.jdbc.driver.OracleDriver
-	</property>
+		</property>
+		<property name="connection.pool_size">10</property>
 		<property name="hbm2ddl.auto">validate</property>
 		<property name="show_sql">true</property>
 		<property name="format_sql">true</property>
-		
+
 		<property name="hibernate.current_session_context_class">thread</property>
 		
 		<mapping resource="user.hbm.xml" />
-		<mapping resource ="galleryImage.hbm.xml" />
+		<mapping resource="galleryImage.hbm.xml" />
 
 	</session-factory>
 

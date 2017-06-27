@@ -21,9 +21,12 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.annotations.common.util.impl.Log;
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -41,21 +44,23 @@ import com.misc.QueryStrings;
 import com.model.GalleryImage;
 import com.model.MyUserInfo;
 import com.util.ApplicationProperties;
+import com.util.SessionHelper;
 
 public class GalleryImageDAOImpl implements GalleryImageDAO {
-	Configuration cg = new Configuration().configure();
+	/*Configuration cg = new Configuration().configure();
 	ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(cg.getProperties()).build();;
-	SessionFactory factory = cg.buildSessionFactory(serviceRegistry);
-	Session ssn = factory.openSession();
-	Transaction tn = ssn.beginTransaction();
-	@Autowired
-	private Environment env;
-
+	SessionFactory factory = cg.buildSessionFactory(serviceRegistry);*/
+	Logger log = LoggerFactory.logger(GalleryImageDAOImpl.class);
+	//TODO Try creating a session helper that creates once instance.
 	public GalleryImage[] getAllPictures() throws Exception {
+		Session ssn = null;
+		Transaction tn = null;
 		List<GalleryImage> results = null;
 		GalleryImage[] asList = null;
 		StringBuilder queryString = new StringBuilder(QueryStrings.GET_ALL_GALLERY_IMAGES);
 		try {
+			ssn = SessionHelper.getSessionFactory().getCurrentSession().isOpen() ? SessionHelper.getSessionFactory().getCurrentSession() : SessionHelper.getSessionFactory().openSession();
+			tn = ssn.beginTransaction();
 			results = (ArrayList<GalleryImage>) ssn.createQuery(queryString.toString()).list();
 			if (results != null && !results.isEmpty()) {
 				asList = (GalleryImage[]) results.toArray();
@@ -63,9 +68,11 @@ public class GalleryImageDAOImpl implements GalleryImageDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			tn.rollback();
 		} finally {
-			ssn.clear();
+			if(tn != null){
+				tn.commit();
+			}
+			
 		}
 		return null;
 	}
@@ -75,8 +82,11 @@ public class GalleryImageDAOImpl implements GalleryImageDAO {
 		List<File> galleryResults = new ArrayList<File>();
 		Iterator<GalleryImage> iter = null;
 		GalleryImage image = null;
-
+		Session ssn = null;
+		Transaction tn = null;
 		try {
+			ssn = SessionHelper.getSessionFactory().getCurrentSession().isOpen() ? SessionHelper.getSessionFactory().getCurrentSession() : SessionHelper.getSessionFactory().openSession();
+			tn = ssn.beginTransaction();
 			gallery = (List<GalleryImage>) ssn.createQuery(QueryStrings.GET_ALL_GALLERY_IMAGES).list();
 			if (gallery != null && !gallery.isEmpty()) {
 				iter = gallery.iterator();
@@ -93,19 +103,31 @@ public class GalleryImageDAOImpl implements GalleryImageDAO {
 			}
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
+		}finally{
+			if(tn != null){
+				tn.commit();
+			}
 		}
 	}
 
 	public GalleryImage getPictureByName(String name) throws Exception {
 		GalleryImage image = null;
 		StringBuilder query = new StringBuilder(QueryStrings.GET_IMAGES_BY_NAME);
+		Session ssn = null;
+		Transaction tn = null;
 		try {
+			ssn = SessionHelper.getSessionFactory().getCurrentSession().isOpen() ? SessionHelper.getSessionFactory().getCurrentSession() : SessionHelper.getSessionFactory().openSession();
+			tn = ssn.beginTransaction();
 			image = (GalleryImage) ssn.createQuery(query.toString()).setParameter("name", name).uniqueResult();
 			if (null != image) {
 				return image;
 			}
 		} catch (Exception e) {
 			throw e;
+		}finally{
+			if(tn != null){
+				tn.commit();
+			}
 		}
 
 		return null;
@@ -117,8 +139,12 @@ public class GalleryImageDAOImpl implements GalleryImageDAO {
 		OutputStream fileOut = null;
 		GalleryImage fetchImage = null;
 		String fileName = null;
+		Session ssn = null;
+		Transaction tn = null;
 		try {
 			if (null != picture) {
+				ssn = SessionHelper.getSessionFactory().getCurrentSession().isOpen() ? SessionHelper.getSessionFactory().getCurrentSession() : SessionHelper.getSessionFactory().openSession();
+				tn = ssn.beginTransaction();
 				fileName = picture.getName();
 				targetFile = new File(QueryStrings.STORAGE_DIRECTORY + fileName);
 				fileOut = new FileOutputStream(targetFile);
@@ -133,6 +159,7 @@ public class GalleryImageDAOImpl implements GalleryImageDAO {
 			throw new Exception(e.getMessage());
 		} finally {
 			fileOut.close();
+			tn.commit();
 		}
 		return false;
 	}
@@ -202,38 +229,81 @@ public class GalleryImageDAOImpl implements GalleryImageDAO {
 	}
 
 	public List<String> getAllImageNames() throws Exception {
-
+		Session ssn = null;
+		Transaction tn = null;
 		try {
+			ssn = SessionHelper.getSessionFactory().getCurrentSession().isOpen() ? SessionHelper.getSessionFactory().getCurrentSession() : SessionHelper.getSessionFactory().openSession();
+			tn = ssn.beginTransaction();
 			@SuppressWarnings("unchecked")
 			List<String> images = (List<String>) ssn.createQuery(QueryStrings.GET_ALL_IMAGE_NAMES).list();
+			
 			return images;
 		} catch (Exception e) {
 			throw e;
+		}finally{
+			if(tn != null){
+				tn.commit();
+			}
 		}
 
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<String> getAllImageNamesByPagination(int numOfRows, int startingRow) throws Exception {
+		Session ssn = null;
+		Transaction tn = null;
+
 		try {
+			System.out.println(SessionHelper.getSessionFactory().getCurrentSession().toString());
+			System.out.println(SessionHelper.getSessionFactory().getCurrentSession().isOpen() );
+			
+			ssn = SessionHelper.getSessionFactory().getCurrentSession().isOpen() ? SessionHelper.getSessionFactory().getCurrentSession() : SessionHelper.getSessionFactory().openSession();
+			tn = ssn.beginTransaction();
+			
+			//System.out.println(tn.isActive());
 			Query query = ssn.createQuery(QueryStrings.GET_ALL_IMAGE_NAMES);
 			query.setFirstResult(startingRow);
 			query.setFetchSize(numOfRows);
 			query.setMaxResults(numOfRows);
 			
 			List<String> images = (List<String>)query.list();
-					
 			return images;
+			
 		} catch (Exception e) {
 			throw e;
+		}finally{
+			if(tn != null){
+				tn.commit();
+				
+			}
+			/*if(ssn != null){
+				ssn.clear();
+				ssn.disconnect();
+				ssn.close();
+			}*/
 		}
 	}
 
 	public Long getCountOfAllPictures() throws Exception {
+		Session ssn = null;
+		Transaction tn = null;
 		try {
+			ssn = SessionHelper.getSessionFactory().getCurrentSession().isOpen() ? SessionHelper.getSessionFactory().getCurrentSession() : SessionHelper.getSessionFactory().openSession();
+			tn = ssn.beginTransaction();
 			return (Long) ssn.createQuery(QueryStrings.GET_ALL_GALLERY_IMAGE_COUNT).uniqueResult();
 		} catch (Exception e) {
 			throw e;
+		}finally{
+			if(tn != null){
+				tn.commit();
+				
+			}
+/*			if(ssn != null){
+				ssn.flush();
+				ssn.clear();
+				ssn.disconnect();
+				ssn.close();
+			}*/
 		}
 	}
 }
