@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <%@include file="banner.jsp"%>
 <%
-	int i = 1;
+	int i = 0;
 %>
 <style type="text/css">
 div.img {
@@ -57,15 +57,14 @@ div.desc {
 			  var $dialog = $('#dialog1')
 			  .html('<iframe style=" border-style: solid;border-color: #000000" src="' + this.children[0].src + '" width="100%" height="100%"></iframe>')
 			  .dialog({
-			    title: "Page",
+			    title: this.children[0].alt !== undefined ? this.children[0].alt  : 'Image',
 			    autoOpen: false,
-			    //dialogClass: 'dialog_fixed,ui-widget-header',
+			   /*  dialogClass: 'dialog_fixed,ui-widget-header', */
 			    modal: true,
 			    height: this.children[0].naturalHeight,
 			    width: this.children[0].naturalWidth,
 			    draggable:true,
-			    /*close: function () { $(this).remove(); },*/
-			    buttons: { "Ok": function () {         $(this).dialog("close"); } }
+			    close: function () { $(this).remove(); }
 			  });
 			  $dialog.dialog('open');
 			} 
@@ -84,7 +83,7 @@ div.desc {
 				<c:forEach items="${galleryImages}" var="image">
 
 					<%
-						if (i % 5 == 0 && i != 0) {
+						if (i % 5 == 0) {
 					%>
 				
 			</tr>
@@ -101,7 +100,7 @@ div.desc {
 				<td>
 					<div class="responsive">
 						<div class="img">
-							<img src="img/${image}" alt="image" />${image}
+							<img src="img/${image}" alt="Image -  ${image}" />${image}
 						</div>
 					</div>
 				</td>
