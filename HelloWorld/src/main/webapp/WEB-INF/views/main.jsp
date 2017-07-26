@@ -115,9 +115,10 @@ div.desc {
 		</table>
 		
 		</div>
-		<%@include file="pagination.jsp"%>
 		<div id="dialog1" title="Dialog Title" hidden="hidden">I'm a dialog</div>
 	</form:form>
+	<%@include file="pagination.jsp"%>
+	
 	
 </body>
 </html>
