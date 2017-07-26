@@ -15,7 +15,8 @@ if(session.getAttribute("user") != null){
 }
 %>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 function changeBackground(element){
@@ -26,7 +27,7 @@ function changeBackground(element){
 }
 
 </script>
-
+ <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/global.css">
 <style>
 .galleryImageTable{
 width: 100%;	
@@ -99,6 +100,7 @@ border-sytle: onset black 5px; */
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 </style>
+
 </head>
 <body>
 	

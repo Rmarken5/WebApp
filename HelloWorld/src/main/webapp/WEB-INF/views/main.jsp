@@ -11,6 +11,7 @@
 <%
 	int i = 0;
 %>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/galleryStyle.css">
 <style type="text/css">
 div.img {
 	border: 1px solid #ccc;
@@ -44,10 +45,10 @@ div.desc {
 <script type="text/javascript">
 
 	$(document).ready(function() {
-		$("#mainTable").addClass("galleryImageTable");
+	/* 	$("#mainTable").addClass("galleryImageTable");
 		//$("#mainTable tr").addClass("galleryImageRow");
-		$("#mainTable td").addClass("galleryImageCell");
-		$('body').css('background', '#0642a3');
+		$("#mainTable td").addClass("galleryImageCell"); */
+		
 		// $(document).css('background-image', 'url( /HelloWorld/src/main/webapp/WEB-INF/resources/images/i89.jpg)');
 
 		var classname = document.getElementsByClassName("img");
@@ -78,6 +79,7 @@ div.desc {
 </head>
 <body>
 	<form:form id="mainForm">
+	<div class = "container">
 		<table id="mainTable">
 			<tr>
 				<c:forEach items="${galleryImages}" var="image">
@@ -111,8 +113,11 @@ div.desc {
 				%>
 				</c:forEach>
 		</table>
+		
+		</div>
+		<%@include file="pagination.jsp"%>
 		<div id="dialog1" title="Dialog Title" hidden="hidden">I'm a dialog</div>
 	</form:form>
-	<%@include file="pagination.jsp"%>
+	
 </body>
 </html>

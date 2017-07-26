@@ -7,12 +7,10 @@ pageEncoding="ISO-8859-1"%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Valley Jam</title>
 <style type="text/css">
-body{
-	background-image: url(/images/i89.jpg);
-}
 </style>
+<%@include file="/WEB-INF/views/banner.jsp"%>
 </head>
-<body>
+<body id = "body">
  
 	<center>
 		<h2>Go a head. Click it!</h2>
