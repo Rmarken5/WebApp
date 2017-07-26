@@ -3,6 +3,5 @@
 	margin:auto;
 	heigth:550px; 	
 	background-image: url("../images/content.png");
-	overflow-y: scroll;
 	position: relative;
 }
