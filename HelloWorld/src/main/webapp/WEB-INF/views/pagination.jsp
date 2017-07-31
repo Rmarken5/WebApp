@@ -72,6 +72,7 @@ function next(increment){
 		var newHTML = '';
 		var td;
 		var tr;
+		var classname;
 		if(msg && "" != msg && '' != msg){
 			imageNames = msg.split(',');
 			$('#mainTable').html('');
@@ -85,13 +86,18 @@ function next(increment){
 					tr = '<tr>';
 					newHTML = newHTML+tr;
 				}
-				td = '<td> <div class="responsive"><div class="img"><img src=img/' + imageNames[i] + ' />' +imageNames[i] +' </div></div> </td>';
+				td = '<td class = "gallery-cell" style = "height:150px; width:150px;" > <div class="responsive"><div class="img"><img src=img/' + imageNames[i] + ' height="200" width ="200" />' +imageNames[i] +' </div></div> </td>';
 				newHTML = newHTML+td;
 				
 			}
 			newHTML = newHTML + '</tbody>';
 			$('#mainTable').html(newHTML);
 		}
+		
+		classname = document.getElementsByClassName("img");
+		Array.from(classname).forEach(function(element) {
+			element.addEventListener('click', opendialog);
+		});
 	}
 	function changePageNumber(pageNumber){
 		var pageLabel;

@@ -8,7 +8,7 @@ pageEncoding="ISO-8859-1"%>
 <title>Valley Jam</title>
 <style type="text/css">
 </style>
-<%@include file="/WEB-INF/views/banner.jsp"%>
+<%@include file="/WEB-INF/views/header.jsp"%>
 </head>
 <body id = "body">
  

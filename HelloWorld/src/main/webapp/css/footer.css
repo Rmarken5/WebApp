@@ -1,0 +1,31 @@
+@CHARSET "UTF-8";
+
+.footer-content {
+	background-color: black;
+	height: 300px;
+	width: 100%;
+	background-size: cover;
+}
+
+.footer-content table {
+	color: white;
+	font-family: "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode",
+		"Lucida Sans", Tahoma, sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 400;
+	line-height: 20px;
+	vertical-align: bottom;
+	margin: auto; 
+}
+
+.footer-list {
+	list-style: none;
+	margin: auto; 
+}
+
+.cell-style {
+	border-right : solid 1px white;
+	vertical-align: top;
+}

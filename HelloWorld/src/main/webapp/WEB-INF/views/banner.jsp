@@ -102,7 +102,7 @@ border-sytle: onset black 5px; */
 </style>
 
 </head>
-<body>
+<body id = "content-area">
 	
 	<form:form action="direct" method="POST" >
 		<div id = "bannerContainer">
@@ -111,7 +111,7 @@ border-sytle: onset black 5px; */
 				<ul id = "banner">
 					<li><a href="${contextPath}" class="logo">Valley Jam</a></li>
 					
-						<li onmouseover="changeBackground(this)" id ="main"><a href = "main">Main</a></li>
+						<li onmouseover="changeBackground(this)" id ="main"><a href = "home">Main</a></li>
 						<li><a href = "${contextPath}/acts">Acts</a></li>
 						<li><a href = "${contextPath}/gallery/1">Gallery</a></li>
 						<li><a href = "${contextPath}/contact">Contact</a></li>

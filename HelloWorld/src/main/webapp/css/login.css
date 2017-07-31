@@ -1,0 +1,33 @@
+.login-table{
+	border: 3px solid  #4435eb;
+	background-image:url('../images/content.png');
+	/* #4CAF50*/
+	border-collapse:separate;
+	width:50%;
+}
+.login-input {
+    text-align: right;
+}
+input[type=text] {
+    float: left;
+    clear:both;
+    overflow: hidden;
+   
+}
+input[type=password] {
+    float: left;
+    clear:both;
+	overflow: hidden;
+}
+.submit{
+
+	margin:auto;
+	
+ }
+ .trSpace{
+ height:150px;
+ text-align: center;
+ color:white;
+ 
+ }
+ 

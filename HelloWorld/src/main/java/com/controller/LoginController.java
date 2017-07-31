@@ -15,7 +15,7 @@ import com.model.User;
 @Scope("session")
 @SessionAttributes("user")
 public class LoginController {
-	private final String LOGIN_MESSAGE = "Welcome to my site, please login to continue!";
+	private final String LOGIN_MESSAGE = "Welcome to Valley Jam, please login !";
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public ModelAndView submitLoginForm(){
