@@ -7,13 +7,14 @@
 		
 			<form:form commandName="user" method="post" action="login">
 			<div class="login-table">
+			<p>${errorMessage}</p>
 				<table width="400px">
 					<tr>
-						<td height="100px" class="login-input">User Name:</td>
+						<td height="100px" class="label">User Name:</td>
 						<td class="login-input"><form:input path="userName" /></td>
 					</tr>
 					<tr>
-						<td height="30px" class="login-input">Password:</td>
+						<td height="30px" class="label">Password:</td>
 						<td class="login-input"><form:password path="password" /></td>
 					</tr>
 					<!-- 	

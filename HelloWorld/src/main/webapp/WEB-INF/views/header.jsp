@@ -16,7 +16,7 @@
 					<%
 						if(null != user && null != user.getFirstName()){
 					%>
-					<li><label style="color:white;" for= "userName">Hello, <%=user.getFirstName()%> </label></li>			
+					<li><label for= "userName">Hello, <%=user.getFirstName()%> </label></li>			
 					<%}else{%>	
 					<li><a href="${contextPath}/login" >Login!</a><li>
 					<li><a href="${contextPath}/create">Sign Up!</a></li>

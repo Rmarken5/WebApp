@@ -113,8 +113,12 @@ public class FileUploadBO {
 			numberOfImages = service.getCountOfAllPictures();
 			if (numberOfImages > 0) {
 				numPages = numberOfImages / imagesPerPage;
-				if(numPages > 1 && (numberOfImages % imagesPerPage >1)){
+				if( numPages < 1 ){
+					numPages = 0;
+				}else if (numPages >= 1 && (numberOfImages % imagesPerPage >0)){
 					numPages = numPages + 1;
+				}
+				if(numPages > 1 && (numberOfImages % imagesPerPage >0)){
 				}
 			}
 			return numPages;

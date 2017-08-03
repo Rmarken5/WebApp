@@ -1,8 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
+
 <%
 	int pageNum = 0;
 	long maxPages = 0;
@@ -19,27 +15,36 @@
 %>
 <script>
 $(document).ready(function(){
+	var ctxPath = document.getElementById("ctxPath").value;
 	var pageNumber = $('#pageNum').val();
 	var numOfPages = $('#numOfPages').val();
 	if(pageNumber - 5  < 1){
-		$('#skipPrev').prop('disabled', true);
+		$('#skipPrev').attr('disabled', 'disabled');
+		$('#skipPrev').attr('src',ctxPath + '/images/button_skip_previous_disabled.png');
 	}else{
-		$('#skipPrev').prop('disabled', false);
+		$('#skipPrev').removeAttr('disabled');
+		$('#skipPrev').attr('src',ctxPath + '/images/button_skip_previous.png');
 	}
 	if(pageNumber <= 1){
-		$('#prev').prop('disabled', true);
+		$('#prev').attr('disabled', 'disabled');
+		$('#prev').attr('src',ctxPath + '/images/button_previous_disabled.png');
 	}else{
-		$('#prev').prop('disabled', false);
+		$('#prev').removeAttr('disabled');
+		$('#prev').attr('src',ctxPath + '/images/button_previous.png');
 	}
 	if(pageNumber >= numOfPages ){
-		$('#next').prop('disabled', true);
+		$('#next').attr('disabled', 'disabled');
+		$('#next').attr('src',ctxPath + '/images/button_next_disabled.png');
 	}else{
-		$('#next').prop('disabled', false);
+		$('#next').removeAttr('disabled');
+		$('#next').attr('src',ctxPath + '/images/button_next.png');
 	}
 	if(pageNumber +5 > numOfPages){
-		$('#skipNext').prop('disabled', true);
+		$('#skipNext').attr('disabled', 'disabled');
+		$('#skipNext').attr('src',ctxPath + '/images/button_skip_next_disabled.png');
 	}else{
-		$('#skipNext').prop('disabled', false);
+		$('#skipNext').removeAttr('disabled');
+		$('#skipNext').attr('src',ctxPath + '/images/button_skip_next.png');
 	}
 });
 function next(increment){
@@ -100,6 +105,7 @@ function next(increment){
 		});
 	}
 	function changePageNumber(pageNumber){
+		var ctxPath = document.getElementById("ctxPath").value;
 		var pageLabel;
 		var numOfPages;
 		if($('#pageLabel').length >0 && pageNumber){
@@ -108,41 +114,71 @@ function next(increment){
 			pageLabel  = $('#pageLabel');
 			pageLabel.html('<label id = "pageLabel" >Page ' + pageNumber + ' of ' + numOfPages + '</label>');
 			if(pageNumber - 5  < 1){
-				$('#skipPrev').prop('disabled', true);
+				$('#skipPrev').attr('disabled', 'disabled');
+				$('#skipPrev').attr('src',ctxPath + '/images/button_skip_previous_disabled.png');
 			}else{
-				$('#skipPrev').prop('disabled', false);
+				$('#skipPrev').removeAttr('disabled');
+				$('#skipPrev').attr('src',ctxPath + '/images/button_skip_previous.png');
 			}
 			if(pageNumber <= 1){
-				$('#prev').prop('disabled', true);
+				$('#prev').attr('disabled', 'disabled');
+				$('#prev').attr('src',ctxPath + '/images/button_previous_disabled.png');
 			}else{
-				$('#prev').prop('disabled', false);
+				$('#prev').removeAttr('disabled');
+				$('#prev').attr('src',ctxPath + '/images/button_previous.png');
 			}
 			if(pageNumber >= numOfPages ){
-				$('#next').prop('disabled', true);
+				$('#next').attr('disabled', 'disabled');
+				$('#next').attr('src',ctxPath + '/images/button_next_disabled.png');
 			}else{
-				$('#next').prop('disabled', false);
+				$('#next').removeAttr('disabled');
+				$('#next').attr('src',ctxPath + '/images/button_next.png');
 			}
 			if(pageNumber +5 > numOfPages){
-				$('#skipNext').prop('disabled', true);
+				$('#skipNext').attr('disabled', 'disabled');
+				$('#skipNext').attr('src',ctxPath + '/images/button_skip_next_disabled.png');
 			}else{
-				$('#skipNext').prop('disabled', false);
+				$('#skipNext').removeAttr('disabled');
+				$('#skipNext').attr('src',ctxPath + '/images/button_skip_next.png');
 			}
 		}
 	}
 </script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-</head>
 <body>
 <input type="hidden" id = "pageNum" value = '<%=pageNum%>' /> 
 <input type ="hidden" id = "numOfPages" value =  '<%=maxPages%>' />
+<input type = "hidden" id = "ctxPath" value = "${contextPath}" />
 
 	<div id="pagination">
-		<button id = "skipPrev" onclick="next(-5);" >Skip Previous</button>
+	<%if(pageNum > 5 ){%>
+		<input id = "skipPrev"   type="image" src="${contextPath}/images/button_skip_previous.png" onclick="next(-5);"/>
+	<%}else{ %>
+		<input id = "skipPrev"   type="image" src="${contextPath}/images/button_skip_previous_disabled.png" disabled="disabled" onclick="next(-5);" />
+	<%}%>	
+	<%if(pageNum > 1 ){%>
+		<input id = "prev"  type="image" src="${contextPath}/images/button_previous.png" onclick="next(-1);"/>
+	<%}else{ %>
+		<input id = "prev"  type="image" src="${contextPath}/images/button_previous_disabled.png" disabled="disabled" onclick="next(-1);"/>
+	<%}%>	
+	
+	<label id = "pageLabel" >Page <%=pageNum%> of <%=maxPages%></label>
+	
+	<%if(pageNum < maxPages ){%>
+	<input id = "next" type="image" src="${contextPath}/images/button_next.png" onclick="next(1);"/>
+	<%}else{ %>
+		<input id = "next" type="image" src="${contextPath}/images/button_next_disabled.png" disabled="disabled" onclick="next(1);"/>
+	<%}%>	
+	
+	<%if(pageNum < maxPages ){%>
+		<input id = "skipNext"  type="image" src="${contextPath}/images/button_skip_next.png" onclick="next(5);"/>
+	<%}else{ %>
+			<input id = "skipNext"  type="image" src="${contextPath}/images/button_skip_next_disabled.png" disabled="disabled" onclick="next(5);" />
+	<%}%>	
+	<!-- 	<button id = "skipPrev" onclick="next(-5);" >Skip Previous</button>
 		<button id = "prev" onclick="next(-1);" >Previous</button>
-		<label id = "pageLabel" >Page <%=pageNum%> of <%=maxPages%></label>
+		
 		<button id = "next" onclick="next(1);" >Next</button>
-		<button id = "skipNext" onclick="next(5);" >Skip Next</button>
+		<button id = "skipNext" onclick="next(5);" >Skip Next</button> -->
 
 	</div>
 </body>
-</html>

@@ -1,8 +1,7 @@
 .gallery-container{
-	width:80%;
-	margin:auto;
-	heigth:550px; 	
+	margin-left:150px;
+	margin-right:150px;
 	background-image: url("../images/content.png");
-	position: relative;
 }
+
 
