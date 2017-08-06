@@ -1,7 +1,5 @@
 package com.controller;
 
-import java.util.Map;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,13 +11,13 @@ import com.business.UserBO;
 import com.model.User;
 
 @Controller
-public class CreateAcccountController {
+public class CreateAccountController {
 	private UserBO usrBO = new UserBO();
 	private final String CREATE_USER_MESSAGE = "Please fill all the fields to create a new user";
 	
 	@RequestMapping(value = "create", method = RequestMethod.GET)
 	public ModelAndView createUser(){
-		ModelAndView mv = new ModelAndView("createUser");
+		ModelAndView mv = new ModelAndView("createuser");
 		mv.addObject("message",CREATE_USER_MESSAGE);
 		mv.addObject("newUser", new User());
 		mv.addObject("rePass", new String());

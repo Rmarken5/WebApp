@@ -45,7 +45,7 @@ public class UserBO {
 					&& null != user.getPassword()){
 				returnUser =  service.validateLogin(user.getUserName(), user.getPassword());
 				if(null != returnUser){
-					mv = new ModelAndView("main","user",returnUser);
+					mv = new ModelAndView("home","user",returnUser);
 					return mv;
 				}else{
 					errorMessage = "There is no user " + user.getUserName() +". Please sign up.";

@@ -1,0 +1,13 @@
+.content-div{
+	
+	width:40%;
+	margin:auto;
+	background-image: url("../images/content.png");
+	
+}
+
+.acts{
+	width:90%;
+	margin: auto;
+	padding: 10px;	
+}
