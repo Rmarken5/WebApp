@@ -7,17 +7,17 @@
 <hibernate-configuration>
 
 	<session-factory>
-		<property name="connection.username">scott</property>
+		<property name="connection.username">jam</property>
 		<property name="connection.url">
-			jdbc:oracle:thin:@10.0.0.242:1521:ValleyJam
+			jdbc:mysql://10.0.0.94:3306/valley_jam
 		</property>
 		<property name="dialect">
-			org.hibernate.dialect.Oracle10gDialect
+			org.hibernate.dialect.MySQLDialect
 		</property>
 
-		<property name="connection.password">tiger</property>
+		<property name="connection.password">valley</property>
 		<property name="connection.driver_class">
-			oracle.jdbc.driver.OracleDriver
+			com.mysql.jdbc.Driver
 		</property>
 		<property name="hibernate.c3p0.min_size">5</property>
 		<property name="hibernate.c3p0.max_size">20</property>

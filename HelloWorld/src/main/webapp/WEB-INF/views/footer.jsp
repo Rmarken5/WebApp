@@ -7,7 +7,7 @@
 		<tr>
 			<td class = "cell-style">
 				<ul class = "footer-list"> 
-				<li>Valley Jam Logo</li>
+				<!-- <li>Valley Jam Logo</li> -->
 				</ul>
 			</td>
 			<td class = "cell-style">

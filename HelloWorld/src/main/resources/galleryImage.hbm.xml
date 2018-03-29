@@ -1,7 +1,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-<class name = "com.model.GalleryImage" table = "pictures">
+<class name = "com.model.GalleryImage" table = "PICTURES">
 
 <composite-id>
 <key-property name="id" column="id" type = "long"  />
